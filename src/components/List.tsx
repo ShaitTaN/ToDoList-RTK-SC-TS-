@@ -7,7 +7,8 @@ import { actions as TodoSliceActions } from "../store/Slices/TodoSlice";
 import { Button } from "./styled/Button";
 
 const StyledList = styled.div`
-  width: 400px;
+  max-width: 400px;
+	width: 100%;
   min-height: 400px;
   margin: 0 auto;
   background-color: #e8e8e8;
@@ -30,7 +31,8 @@ const StyledTitle = styled.h1`
 
 const StyledInput = styled.input`
   margin: 0 auto;
-  width: 400px;
+  max-width: 400px;
+	width: 100%;
   height: 40px;
   font-size: 24px;
   border: none;

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 export const Global = createGlobalStyle`
 *{
 	box-sizing: border-box;
@@ -11,5 +12,6 @@ export const Global = createGlobalStyle`
 
 body{
 	background: linear-gradient(90deg, rgba(121,9,9,1) 0%, rgba(255,0,108,1) 77%);
+	font-family: 'Anek Malayalam', sans-serif;
 }
 `

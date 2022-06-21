@@ -23,6 +23,8 @@ const StyledItem = styled.div<IItemProps>`
     padding: 10px;
     overflow: hidden;
     font-size: 20px;
+		word-wrap: break-word;
+		width: 280px;
     &::before {
       content: "";
       position: absolute;
@@ -60,7 +62,7 @@ const ListItem: FC<ITodo> = (props) => {
       onClick={() => handleComplete(props.id)}
     >
       <Flex justify="space-around">
-        <li>{props.title}</li>
+        <li><p>{props.title}</p></li>
         <AiOutlineClose
           color="#ff006c"
           onClick={(e) => handleDelete(e, props.id)}
