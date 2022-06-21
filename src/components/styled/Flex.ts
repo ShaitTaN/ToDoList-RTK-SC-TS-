@@ -11,4 +11,6 @@ export const Flex = styled.div<Props>`
 	justify-content: ${props => props.justify || 'center'};
 	align-items: ${props => props.align || 'center'};
 	flex-direction: ${props => props.direction || 'row'};
+	width: 100%;
+	height: 100%;
 `

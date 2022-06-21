@@ -3,14 +3,21 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import ListItem from "./ListItem";
 import { Flex } from "./styled/Flex";
-import { actions } from "../store/Slices/TodoSlice";
+import { actions as TodoSliceActions } from "../store/Slices/TodoSlice";
+import { Button } from "./styled/Button";
 
 const StyledList = styled.div`
   width: 400px;
-  min-height: 600px;
+  min-height: 400px;
   margin: 0 auto;
   background-color: #e8e8e8;
-	padding: 5px;
+  padding: 5px;
+	display: flex;
+	flex-direction: column;
+  ul {
+    width: 100%;
+		flex-grow: 1;
+  }
 `;
 
 const StyledTitle = styled.h1`
@@ -18,7 +25,7 @@ const StyledTitle = styled.h1`
   color: white;
   text-align: center;
   margin-top: 20px;
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 `;
 
 const StyledInput = styled.input`
@@ -26,15 +33,16 @@ const StyledInput = styled.input`
   width: 400px;
   height: 40px;
   font-size: 24px;
-	border: none;
-	background-color: #e8e8e8;
-	padding: 5px;
-	margin: 5px 0;
+  border: none;
+  background-color: #e8e8e8;
+  padding: 5px;
+  margin: 5px 0;
 `;
 
 const List: FC = () => {
   const { todos } = useAppSelector((state) => state.todo);
   const dispatch = useAppDispatch();
+	const {addTodo, removeAllTodos, removeCompletedTodos} = TodoSliceActions
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("");
   const [searchedPosts, setSearchedPosts] = useState(todos);
@@ -42,7 +50,7 @@ const List: FC = () => {
   const createTodo = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && value) {
       dispatch(
-        actions.addTodo({
+        addTodo({
           id: Date.now(),
           title: value,
           completed: false,
@@ -52,14 +60,24 @@ const List: FC = () => {
     }
   };
 
-  const searchPosts = (query:string) => {
-		const searchedPosts = todos.filter(todo => todo.title.includes(query.trim()))
-		setSearchedPosts(searchedPosts)
-	};
+	const removeAll = () => {
+		dispatch(removeAllTodos())
+	}
 
-	useEffect(() => {
-		searchPosts(query)
-	}, [query, todos])
+	const removeCompleted = () => {
+		dispatch(removeCompletedTodos())
+	}
+
+  const searchPosts = (query: string) => {
+    const searchedPosts = todos.filter((todo) =>
+      todo.title.includes(query.trim())
+    );
+    setSearchedPosts(searchedPosts);
+  };
+
+  useEffect(() => {
+    searchPosts(query);
+  }, [query, todos]);
 
   return (
     <Flex direction="column">
@@ -80,8 +98,12 @@ const List: FC = () => {
             />
           ))}
         </ul>
+        <Flex justify="space-around">
+          <Button onClick={removeAll} color="#91071a">DELETE ALL</Button>
+          <Button onClick={removeCompleted}>DELETE COMPLETED</Button>
+        </Flex>
       </StyledList>
-			<StyledInput
+      <StyledInput
         placeholder="add todo..."
         value={value}
         onChange={(e) => setValue(e.target.value)}

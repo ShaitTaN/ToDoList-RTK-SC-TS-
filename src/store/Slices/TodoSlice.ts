@@ -37,6 +37,12 @@ const TodoSlice = createSlice({
           : todo;
       });
     },
+		removeAllTodos: (state) => {
+			state.todos = []
+		},
+		removeCompletedTodos: (state) => {
+			state.todos = state.todos.filter(todo => todo.completed === false)
+		}
   },
 });
 
